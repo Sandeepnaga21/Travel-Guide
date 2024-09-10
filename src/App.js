@@ -5,7 +5,7 @@ import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 import './App.css'
 
 class App extends Component {
-  state = {travelList: {}, showLoader: true}
+  state = {travelList: [], showLoader: true}
 
   componentDidMount() {
     this.getTravelingPlaces()
@@ -17,9 +17,9 @@ class App extends Component {
       method: 'GET',
     }
     const response = await fetch(apiUrl, options)
-    const data = response.json()
-    console.log(data)
-    const updatedData = data.packages.map(eachOne => ({
+    const data = await response.json()
+    const {packages} = await data
+    const updatedData = await packages.map(eachOne => ({
       id: eachOne.id,
       name: eachOne.name,
       imageUrl: eachOne.image_url,
@@ -33,8 +33,6 @@ class App extends Component {
 
   render() {
     const {travelList, showLoader} = this.state
-    console.log(showLoader)
-    console.log(travelList)
 
     return (
       <>
